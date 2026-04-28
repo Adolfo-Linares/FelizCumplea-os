@@ -185,6 +185,40 @@ footer {
                 opacity: 0; /* Desaparecen al final */
             }
         }
+        .seccion-carta {
+    display: flex;
+    justify-content: center;
+    padding: 40px 20px;
+    margin-top: 20px; /* Separación de las fotos */
+}
+
+.sobre-carta {
+    background: #ffffff;
+    max-width: 650px;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 35px rgba(0,0,0,0.1);
+    border-top: 8px solid var(--rojo-amor); /* Borde arriba para que luzca diferente */
+    position: relative;
+    text-align: left;
+    line-height: 1.8;
+}
+
+.seccion-carta h2 {
+    font-family: 'Dancing Script', cursive;
+    color: var(--rojo-amor);
+    font-size: 2.8rem;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.firma {
+    font-family: 'Dancing Script', cursive;
+    font-size: 2rem !important;
+    color: var(--rojo-oscuro);
+    text-align: right;
+    margin-top: 30px;
+}
 
         /* Estilo para el control de música flotante */
 .musica-control {
@@ -277,13 +311,38 @@ footer {
     <div class="foto-item"><img src="foto30.jpg" loading="lazy"><p>¡Feliz cumpleaños, amor de mi vida! 🎂❤️</p></div>
 </div>
 
+<div class="seccion-carta">
+            <div class="sobre-carta">
+                <div class="icono-sobre">✉️</div>
+                <h2>Una última cosa...</h2>
+                <div class="texto-carta">
+                    <p>Mi amor,</p>
+                    <p>
+                        Si llegaste hasta aquí, espero que este recorrido por nuestra historia 
+                        te haya recordado lo especial que eres para mí. No solo hoy por ser tu cumpleaños, 
+                        sino cada uno de los días que hemos compartido.
+                    </p>
+                    <p>
+                        Desde aquel <b>1 de noviembre de 2021</b>, has sido mi motivación 
+                        y mi mayor alegría. Gracias por dejarme ser parte de tu vida y por 
+                        regalarme tantos momentos que hoy atesoro en esta página y en mi corazón.
+                    </p>
+                    <p>
+                        Espero que estos 21 años sean solo el inicio de una etapa increíble 
+                        y que me permitas seguir celebrando cada uno de tus días a tu lado.
+                    </p>
+                    <p class="firma">Por siempre tuyo, Adolfo ❤️</p>
+                </div>
+            </div>
+        </div>
+
         <footer>
            ❤️🎂 ¡Te amo infinitamente! 🎂❤️
         </footer>
     </div>
 
     <audio id="musicaFondo" loop>
-    <source src="cancion.mp3" type="audio/mpeg">
+    <source src="La Arrolladora Banda El Limón De René Camacho - Niña De Mi Corazón.mp3" type="audio/mpeg">
 </audio>
 
 <div class="musica-control">
