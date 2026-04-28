@@ -191,6 +191,58 @@ footer {
     padding: 40px 20px;
     margin-top: 20px; /* Separación de las fotos */
 }
+/* Pantalla de inicio */
+/* Pantalla de inicio corregida */
+#overlay {
+    position: fixed;
+    top: 0; 
+    left: 0; 
+    width: 100%; 
+    height: 100%;
+    background: rgba(255, 182, 193, 0.95); /* Color sólido para que no se distraiga con lo de atrás */
+    z-index: 10000; /* Super alto para que nada lo tape */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    transition: opacity 0.8s ease;
+}
+
+.overlay-contenido {
+    background: white;
+    padding: 50px;
+    border-radius: 30px;
+    box-shadow: 0 15px 40px rgba(0,0,0,0.2);
+    max-width: 400px;
+    width: 90%;
+}
+
+.overlay-contenido h1 {
+    color: #e63946 !important; /* Forzamos el rojo */
+    font-family: 'Dancing Script', cursive !important;
+    font-size: 3rem !important;
+    text-shadow: none !important; /* Quitamos sombras aquí para que se vea limpio */
+    margin-bottom: 20px !important;
+}
+
+#btnEntrar {
+    background: #e63946 !important; /* Rojo vibrante */
+    color: white !important;
+    border: none !important;
+    padding: 15px 40px !important;
+    border-radius: 50px !important;
+    font-size: 1.4rem !important;
+    font-weight: bold !important;
+    cursor: pointer !important;
+    display: inline-block !important; /* Asegura que se vea */
+    box-shadow: 0 5px 15px rgba(230, 57, 70, 0.4) !important;
+    transition: transform 0.3s !important;
+}
+
+#btnEntrar:hover {
+    transform: scale(1.1) !important;
+    background: #d00000 !important;
+}
 
 .sobre-carta {
     background: #ffffff;
@@ -248,6 +300,18 @@ footer {
     </style>
 </head>
 <body>
+<body>
+    <div id="overlay">
+        <div class="overlay-contenido">
+            <h1>Hola, mi amor, mujer de mi alma... ❤️</h1>
+            <p>He preparado este espacio para celebrar tu día tan especial, tu cumpleaños!! 🎂❤️.</p>
+            <button onclick="comenzarExperiencia()" id="btnEntrar">Entrar a nuestra historia</button>
+        </div>
+    </div>
+
+    <audio id="musicaFondo" loop>
+        <source src="cancion.mp3" type="audio/mpeg">
+    </audio>
 
     <div id="contenedor-lluvia"></div>
 
@@ -350,107 +414,93 @@ footer {
     <button onclick="toggleMusica()" id="btnMusica">Play</button>
 </div>
 
-    <script>
-        // --- 1. CONFIGURACIONES DE FECHAS (Lo que ya tenías) ---
-        const fechaRelacion = new Date(2021, 10, 1); // 1 Nov 2021
-        const fechaNacimiento = new Date(2005, 3, 29); // 29 Abril 2005
 
-        function actualizarContadores() {
-            const ahora = new Date();
+<script>
+    // 1. FUNCIÓN CRÍTICA DE ENTRADA (Asegúrate de que este nombre coincida con el onclick del botón)
+    function comenzarExperiencia() {
+        console.log("Intentando entrar...");
+        const musica = document.getElementById('musicaFondo');
+        const overlay = document.getElementById('overlay');
+        
+        // Intentar reproducir música
+        if (musica) {
+            musica.play().catch(e => console.log("Audio esperando interacción activa"));
+        }
+        
+        // Quitar el protector de pantalla
+        if (overlay) {
+            overlay.style.opacity = '0';
+            setTimeout(() => {
+                overlay.style.display = 'none';
+            }, 800);
+        }
+    }
 
-            // Lógica Relación
-            const diffAmor = ahora - fechaRelacion;
-            const diasA = Math.floor(diffAmor / (1000 * 60 * 60 * 24));
-            const horasA = Math.floor((diffAmor % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minA = Math.floor((diffAmor % (1000 * 60 * 60)) / (1000 * 60));
-            const segA = Math.floor((diffAmor % (1000 * 60)) / 1000);
+    // 2. CONFIGURACIÓN DE FECHAS
+    const fechaRelacion = new Date(2021, 10, 1); // 1 Nov 2021
+    const fechaNacimiento = new Date(2005, 3, 29); // 29 Abr 2005
 
+    function actualizarContadores() {
+        const ahora = new Date();
+
+        // Tiempo de Relación
+        const diffAmor = ahora - fechaRelacion;
+        const diasA = Math.floor(diffAmor / (1000 * 60 * 60 * 24));
+        const horasA = Math.floor((diffAmor % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+        const minA = Math.floor((diffAmor % (1000 * 60 * 60)) / (1000 * 60));
+        const segA = Math.floor((diffAmor % (1000 * 60)) / 1000);
+
+        if (document.getElementById('contador-amor')) {
             document.getElementById('contador-amor').innerHTML = 
                 `Llevamos juntos:<br><strong>${diasA} días</strong><br><div class="tiempo-detalle">${horasA}h ${minA}m ${segA}s</div>`;
+        }
 
-            // Lógica Vida
-            const diffVida = ahora - fechaNacimiento;
-            const diasV = Math.floor(diffVida / (1000 * 60 * 60 * 24));
-            
+        // Días de Vida
+        const diffVida = ahora - fechaNacimiento;
+        const diasV = Math.floor(diffVida / (1000 * 60 * 60 * 24));
+        if (document.getElementById('contador-vida')) {
             document.getElementById('contador-vida').innerHTML = 
                 `Has iluminado el mundo durante:<br><strong>${diasV.toLocaleString()} días</strong>`;
         }
-
-        setInterval(actualizarContadores, 1000);
-        actualizarContadores();
-
-
-        // --- 2. NUEVA LÓGICA PARA LA LLUVIA DE ICONOS CONTINUA ---
-        
-        const contenedorLluvia = document.getElementById('contenedor-lluvia');
-        
-        // Lista de iconos que quieres que aparezcan (puedes añadir más emojis)
-        const iconosPosibles = ['❤️', '💖', '🎈', '✨', '🌸', '🎂', '🥳', '💘'];
-
-        function crearIcono() {
-            const icono = document.createElement('div');
-            icono.classList.add('icono-flotante');
-            
-            // Elegir un icono aleatorio de la lista
-            icono.innerText = iconosPosibles[Math.floor(Math.random() * iconosPosibles.length)];
-            
-            // Posición horizontal aleatoria (entre 0% y 100% del ancho)
-            icono.style.left = Math.random() * 100 + 'vw';
-            
-            // Tamaño aleatorio (para que haya variedad)
-            const tamaño = Math.random() * 1.5 + 1; // Entre 1rem y 2.5rem
-            icono.style.fontSize = tamaño + 'rem';
-            
-            // Duración de la animación aleatoria (entre 5 y 10 segundos)
-            // Esto hace que unos suban rápido y otros lento, creando más caos y volumen
-            const duracion = Math.random() * 5 + 5;
-            icono.style.animation = `flotarHaciaArriba ${duracion}s linear forwards`;
-            
-            contenedorLluvia.appendChild(icono);
-            
-            // Eliminar el icono del código HTML una vez que termina de flotar
-            // para no saturar la memoria de la página.
-            setTimeout(() => {
-                icono.remove();
-            }, duracion * 1000);
-        }
-
-        // --- ESTA ES LA CLAVE ---
-        // Crear un nuevo icono muy seguido.
-        // '150' significa que cada 150 milisegundos nace un nuevo icono.
-        // Si quieres AÚN MÁS, baja este número (ej: 100). Si quieres menos, súbelo (ej: 300).
-        setInterval(crearIcono, 150); 
-
-
-        // LÓGICA DE MÚSICA Y VIDEO INTELIGENTE
-const musica = document.getElementById('musicaFondo');
-const video = document.getElementById('miVideo'); // Asegúrate que tu etiqueta <video> tenga id="miVideo"
-const btnMusica = document.getElementById('btnMusica');
-
-// Función para reproducir/pausar manualmente
-function toggleMusica() {
-    if (musica.paused) {
-        musica.play();
-        btnMusica.innerText = "Pause";
-    } else {
-        musica.pause();
-        btnMusica.innerText = "Play";
     }
-}
 
-// Si el video empieza a reproducirse, se pausa la música de fondo
-video.onplay = function() {
-    musica.pause();
-    btnMusica.innerText = "Play";
-};
+    setInterval(actualizarContadores, 1000);
+    actualizarContadores();
 
-// Si el video se pausa o termina, la música de fondo vuelve a sonar
-video.onpause = function() {
-    if (video.paused) { // Solo si el usuario pausó el video
-        musica.play();
-        btnMusica.innerText = "Pause";
+    // 3. LLUVIA DE ICONOS
+    const contenedorLluvia = document.getElementById('contenedor-lluvia');
+    const iconosPosibles = ['❤️', '💖', '🎈', '✨', '🌸', '🎂', '🥳', '💘', '🌹'];
+
+    function crearIcono() {
+        if (!contenedorLluvia) return;
+        const icono = document.createElement('div');
+        icono.classList.add('icono-flotante');
+        icono.innerText = iconosPosibles[Math.floor(Math.random() * iconosPosibles.length)];
+        icono.style.left = Math.random() * 100 + 'vw';
+        const tamaño = Math.random() * 1.5 + 1; 
+        icono.style.fontSize = tamaño + 'rem';
+        const duracion = Math.random() * 5 + 5;
+        icono.style.animation = `flotarHaciaArriba ${duracion}s linear forwards`;
+        contenedorLluvia.appendChild(icono);
+        setTimeout(() => { icono.remove(); }, duracion * 1000);
     }
-};
+    setInterval(crearIcono, 150);
+
+    // 4. CONTROL INTELIGENTE VIDEO/MÚSICA
+    const musica = document.getElementById('musicaFondo');
+    const video = document.getElementById('miVideo');
+
+    if (video && musica) {
+        video.onplay = () => musica.pause();
+        video.onpause = () => {
+            // Solo vuelve la música si ya entramos (overlay oculto)
+            if (document.getElementById('overlay').style.display === 'none') {
+                musica.play();
+            }
+        };
+    }
+
+    
 
     </script>
 
