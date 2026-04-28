@@ -417,24 +417,36 @@ footer {
 
 <script>
     // 1. FUNCIÓN CRÍTICA DE ENTRADA (Asegúrate de que este nombre coincida con el onclick del botón)
-    function comenzarExperiencia() {
-        console.log("Intentando entrar...");
-        const musica = document.getElementById('musicaFondo');
-        const overlay = document.getElementById('overlay');
-        
-        // Intentar reproducir música
-        if (musica) {
-            musica.play().catch(e => console.log("Audio esperando interacción activa"));
-        }
-        
-        // Quitar el protector de pantalla
-        if (overlay) {
-            overlay.style.opacity = '0';
-            setTimeout(() => {
-                overlay.style.display = 'none';
-            }, 800);
+function comenzarExperiencia() {
+    const musica = document.getElementById('musicaFondo');
+    const overlay = document.getElementById('overlay');
+
+    // Intentar reproducir la música con una promesa para evitar bloqueos
+    if (musica) {
+        musica.volume = 0.5; // Ajustamos volumen a la mitad para que no asuste
+        var playPromise = musica.play();
+
+        if (playPromise !== undefined) {
+            playPromise.then(_ => {
+                console.log("Música iniciada correctamente");
+            }).catch(error => {
+                console.log("Error al iniciar música: ", error);
+                // Si falla, intentamos reproducir de nuevo al mover el mouse
+                document.body.addEventListener('mousemove', () => {
+                    musica.play();
+                }, { once: true });
+            });
         }
     }
+
+    // Desvanecer el overlay
+    if (overlay) {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+        }, 800);
+    }
+}
 
     // 2. CONFIGURACIÓN DE FECHAS
     const fechaRelacion = new Date(2021, 10, 1); // 1 Nov 2021
