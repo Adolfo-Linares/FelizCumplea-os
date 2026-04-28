@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Para Mi Persona Favorita ❤️</title>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@700&family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --rosa-fuerte: #ff4d6d;
+            --rosa-claro: #ffccd5;
+            --dorado: #ffb703;
+        }
+
+        body {
+            margin: 0;
+            font-family: 'Poppins', sans-serif;
+            /* Fondo con degradado animado sutil */
+            background: linear-gradient(-45deg, #ff9a9e, #fad0c4, #ffecd2, #fcb69f);
+            background-size: 400% 400%;
+            animation: gradientBg 15s ease infinite;
+            color: #444;
+            min-height: 100vh;
+            overflow-x: hidden;
+            /* Importante: posicionamiento relativo para que los iconos floten detrás del contenido */
+            position: relative; 
+        }
+
+        @keyframes gradientBg {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* --- Estilos del Contenido (Lo que ya tenías) --- */
+        
+        .contenedor-principal {
+            position: relative;
+            color: #e63946; /* Rojo vibrante */
+            z-index: 10; /* Asegura que el texto y video estén SOBRE los iconos */
+            padding-bottom: 50px;
+        }
+
+        header {
+            text-align: center;
+            padding: 60px 20px;
+            color: #e63946; /* Rojo vibrante */
+        }
+
+h1 {
+    font-family: 'Dancing Script', cursive;
+    font-size: 5rem; /* Un poco más grande para que impacte */
+    color: #e63946; /* Rojo vibrante */
+    /* Sombra y borde blanco para que resalte mucho más */
+    text-shadow: 2px 2px 0px #fff, 
+                 -2px -2px 0px #fff, 
+                 2px -2px 0px #fff, 
+                 -2px 2px 0px #fff,
+                 4px 4px 15px rgba(0,0,0,0.2);
+    margin: 0;
+    letter-spacing: 2px;
+}
+
+.subtitulo {
+    color: #d00000; /* Un rojo un poco más oscuro para el contraste */
+    font-weight: 600;
+    font-size: 1.2rem;
+    margin-top: 10px;
+    text-shadow: 1px 1px 2px rgba(255,255,255,0.8);
+}
+        .seccion-info {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 20px;
+            margin-bottom: 40px;
+            padding: 0 20px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+            min-width: 280px;
+            text-align: center;
+            border: 2px solid white;
+        }
+
+        .card h3 { margin-top: 0; color: #333; }
+        .card strong { color: var(--rosa-fuerte); font-size: 1.6rem; }
+        .tiempo-detalle { font-size: 0.9rem; color: #666; margin-top: 5px; }
+
+        .video-principal {
+            max-width: 800px;
+            margin: 0 auto 50px auto;
+            border-radius: 30px;
+            overflow: hidden;
+            box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            border: 8px solid white;
+            background: black;
+        }
+
+        video { width: 100%; display: block; }
+
+        /* Galería de Fotos (Ajustada para soportar muchas fotos) */
+        .contenedor-galeria {
+            padding: 0 5%;
+            column-count: 3;
+            column-gap: 15px;
+        }
+
+        @media (max-width: 900px) { .contenedor-galeria { column-count: 2; } }
+        @media (max-width: 600px) { .contenedor-galeria { column-count: 1; } }
+
+        .foto-item {
+            background: white;
+            padding: 10px;
+            border-radius: 15px;
+            margin-bottom: 15px;
+            display: inline-block;
+            width: 100%;
+            box-sizing: border-box;
+            transition: 0.3s;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.08);
+        }
+
+        .foto-item:hover { transform: translateY(-10px) rotate(2deg); }
+
+        .foto-item img {
+            width: 100%;
+            border-radius: 10px;
+            display: block;
+        }
+
+        .foto-item p { text-align: center; font-style: italic; margin: 10px 0 5px 0; }
+
+footer {
+    background: white;
+    padding: 40px;
+    text-align: center;
+    font-family: 'Dancing Script', cursive;
+    font-size: 3rem;
+    color: #e63946; /* Rojo vibrante */
+    margin-top: 50px;
+    position: relative;
+    z-index: 10;
+    box-shadow: 0 -10px 20px rgba(0,0,0,0.05);
+}
+
+        /* --- NUEVOS ESTILOS PARA LA LLUVIA DE ICONOS (MÁS SEGUIDOS Y MÁS CANTIDAD) --- */
+        
+        #contenedor-lluvia {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1; /* Detrás del contenido z-index: 10 */
+            pointer-events: none; /* Para que no interfiera al hacer clic en el video o fotos */
+        }
+
+        .icono-flotante {
+            position: absolute;
+            bottom: -50px; /* Empiezan justo debajo de la pantalla */
+            opacity: 0;
+            user-select: none;
+            /* La animación se asignará por JavaScript */
+        }
+
+        /* Animación clave para que suban y desaparezcan */
+        @keyframes flotarHaciaArriba {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.8; /* Aparecen rápido */
+            }
+            90% {
+                opacity: 0.8; /* Se mantienen visibles */
+            }
+            100% {
+                transform: translateY(-120vh) rotate(360deg); /* Suben más allá del techo */
+                opacity: 0; /* Desaparecen al final */
+            }
+        }
+
+        /* Estilo para el control de música flotante */
+.musica-control {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    z-index: 100;
+    background: rgba(255, 255, 255, 0.9);
+    padding: 10px 20px;
+    border-radius: 50px;
+    box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    border: 2px solid var(--rojo-amor);
+}
+
+.musica-control button {
+    background: var(--rojo-amor);
+    color: white;
+    border: none;
+    padding: 5px 15px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-weight: bold;
+}
+    </style>
+</head>
+<body>
+
+    <div id="contenedor-lluvia"></div>
+
+    <div class="contenedor-principal">
+        <header>
+            <h1>❤️🎂 ¡Feliz Cumpleaños, Mi Amor! 🎂❤️</h1>
+            <p class="subtitulo">❤️ Eres el regalo más bonito del mundo ❤️</p>
+        </header>
+
+        <div class="seccion-info">
+            <div class="card">
+                <h3>Nuestra Relación en Días ❤️</h3>
+                <div id="contador-amor">Cargando tiempo...</div>
+            </div>
+            <div class="card">
+                <h3>Días de tu luz mi amor 🎂</h3>
+                <div id="contador-vida">Cargando días...</div>
+            </div>
+        </div>
+
+        <div class="video-principal">
+            <video controls>
+                <source src="video1.mp4" type="video/mp4">
+                Tu navegador no soporta videos.
+            }
+            </video>
+        </div>
+
+<div class="contenedor-galeria">
+    <div class="foto-item"><img src="foto1.jpg" loading="lazy"><p>Me encantas demasiado. ❤️</p></div>
+    <div class="foto-item"><img src="foto2.jpg" loading="lazy"><p>Mi sonrisa favorita es la tuya. ❤️</p></div>
+    <div class="foto-item"><img src="foto3.jpg" loading="lazy"><p>Contigo el mundo es más bonito. ❤️</p></div>
+    <div class="foto-item"><img src="foto4.jpg" loading="lazy"><p>Eres mi lugar seguro. ❤️</p></div>
+    <div class="foto-item"><img src="foto5.jpg" loading="lazy"><p>Gracias por cada aventura juntos. ❤️</p></div>
+    <div class="foto-item"><img src="foto6.jpg" loading="lazy"><p>Coleccionando momentos a tu lado. ❤️</p></div>
+    <div class="foto-item"><img src="foto7.jpg" loading="lazy"><p>La mejor parte de mi día eres tú. ❤️</p></div>
+    <div class="foto-item"><img src="foto8.jpg" loading="lazy"><p>Tus abrazos son mi hogar. ❤️</p></div>
+    <div class="foto-item"><img src="foto9.jpg" loading="lazy"><p>Por mil risas más como esta. ❤️</p></div>
+    <div class="foto-item"><img src="foto10.jpg" loading="lazy"><p>Eres el sueño del que no quiero despertar. ❤️</p></div>
+
+    <div class="foto-item"><img src="foto11.jpg" loading="lazy"><p>Mi destino favorito siempre será contigo. ❤️</p></div>
+    <div class="foto-item"><img src="foto12.jpg" loading="lazy"><p>Lo más lindo de mi vida es tenerte. ❤️</p></div>
+    <div class="foto-item"><img src="foto13.jpg" loading="lazy"><p>Cada detalle tuyo me enamora. ❤️</p></div>
+    <div class="foto-item"><img src="foto14.jpg" loading="lazy"><p>Tú y yo, el mejor equipo. ❤️</p></div>
+    <div class="foto-item"><img src="foto15.jpg" loading="lazy"><p>Haces que todo valga la pena. ❤️</p></div>
+    <div class="foto-item"><img src="foto16.jpg" loading="lazy"><p>Eres mi persona favorita en el mundo. ❤️</p></div>
+    <div class="foto-item"><img src="foto17.jpg" loading="lazy"><p>La luz de mis ojos. ❤️</p></div>
+    <div class="foto-item"><img src="foto18.jpg" loading="lazy"><p>Inolvidable, como cada segundo contigo. ❤️</p></div>
+    <div class="foto-item"><img src="foto19.jpg" loading="lazy"><p>Amando cada pedacito de nuestra historia. ❤️</p></div>
+    <div class="foto-item"><img src="foto20.jpg" loading="lazy"><p>No te cambio por nada ni por nadie. ❤️</p></div>
+
+    <div class="foto-item"><img src="foto21.jpg" loading="lazy"><p>Simplemente perfecta. ❤️</p></div>
+    <div class="foto-item"><img src="foto22.jpg" loading="lazy"><p>Mi mayor bendición eres tú. ❤️</p></div>
+    <div class="foto-item"><img src="foto23.jpg" loading="lazy"><p>Caminando juntos siempre es mejor. ❤️</p></div>
+    <div class="foto-item"><img src="foto24.jpg" loading="lazy"><p>Tu amor es mi motor diario. ❤️</p></div>
+    <div class="foto-item"><img src="foto25.jpg" loading="lazy"><p>Lo que siento por ti no cabe en fotos.❤️</p></div>
+    <div class="foto-item"><img src="foto26.jpg" loading="lazy"><p>Por siempre y para siempre. ❤️</p></div>
+    <div class="foto-item"><img src="foto27.jpg" loading="lazy"><p>Eres la pieza que me faltaba. ❤️</p></div>
+    <div class="foto-item"><img src="foto28.jpg" loading="lazy"><p>Haces que mi corazón baile de alegría. ❤️</p></div>
+    <div class="foto-item"><img src="foto29.jpg" loading="lazy"><p>Agradecido por tenerte a mi lado. ❤️</p></div>
+    <div class="foto-item"><img src="foto30.jpg" loading="lazy"><p>¡Feliz cumpleaños, amor de mi vida! 🎂❤️</p></div>
+</div>
+
+        <footer>
+           ❤️🎂 ¡Te amo infinitamente! 🎂❤️
+        </footer>
+    </div>
+
+    <audio id="musicaFondo" loop>
+    <source src="cancion.mp3" type="audio/mpeg">
+</audio>
+
+<div class="musica-control">
+    <span>🎵 Música:</span>
+    <button onclick="toggleMusica()" id="btnMusica">Play</button>
+</div>
+
+    <script>
+        // --- 1. CONFIGURACIONES DE FECHAS (Lo que ya tenías) ---
+        const fechaRelacion = new Date(2021, 10, 1); // 1 Nov 2021
+        const fechaNacimiento = new Date(2005, 3, 29); // 29 Abril 2005
+
+        function actualizarContadores() {
+            const ahora = new Date();
+
+            // Lógica Relación
+            const diffAmor = ahora - fechaRelacion;
+            const diasA = Math.floor(diffAmor / (1000 * 60 * 60 * 24));
+            const horasA = Math.floor((diffAmor % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minA = Math.floor((diffAmor % (1000 * 60 * 60)) / (1000 * 60));
+            const segA = Math.floor((diffAmor % (1000 * 60)) / 1000);
+
+            document.getElementById('contador-amor').innerHTML = 
+                `Llevamos juntos:<br><strong>${diasA} días</strong><br><div class="tiempo-detalle">${horasA}h ${minA}m ${segA}s</div>`;
+
+            // Lógica Vida
+            const diffVida = ahora - fechaNacimiento;
+            const diasV = Math.floor(diffVida / (1000 * 60 * 60 * 24));
+            
+            document.getElementById('contador-vida').innerHTML = 
+                `Has iluminado el mundo durante:<br><strong>${diasV.toLocaleString()} días</strong>`;
+        }
+
+        setInterval(actualizarContadores, 1000);
+        actualizarContadores();
+
+
+        // --- 2. NUEVA LÓGICA PARA LA LLUVIA DE ICONOS CONTINUA ---
+        
+        const contenedorLluvia = document.getElementById('contenedor-lluvia');
+        
+        // Lista de iconos que quieres que aparezcan (puedes añadir más emojis)
+        const iconosPosibles = ['❤️', '💖', '🎈', '✨', '🌸', '🎂', '🥳', '💘'];
+
+        function crearIcono() {
+            const icono = document.createElement('div');
+            icono.classList.add('icono-flotante');
+            
+            // Elegir un icono aleatorio de la lista
+            icono.innerText = iconosPosibles[Math.floor(Math.random() * iconosPosibles.length)];
+            
+            // Posición horizontal aleatoria (entre 0% y 100% del ancho)
+            icono.style.left = Math.random() * 100 + 'vw';
+            
+            // Tamaño aleatorio (para que haya variedad)
+            const tamaño = Math.random() * 1.5 + 1; // Entre 1rem y 2.5rem
+            icono.style.fontSize = tamaño + 'rem';
+            
+            // Duración de la animación aleatoria (entre 5 y 10 segundos)
+            // Esto hace que unos suban rápido y otros lento, creando más caos y volumen
+            const duracion = Math.random() * 5 + 5;
+            icono.style.animation = `flotarHaciaArriba ${duracion}s linear forwards`;
+            
+            contenedorLluvia.appendChild(icono);
+            
+            // Eliminar el icono del código HTML una vez que termina de flotar
+            // para no saturar la memoria de la página.
+            setTimeout(() => {
+                icono.remove();
+            }, duracion * 1000);
+        }
+
+        // --- ESTA ES LA CLAVE ---
+        // Crear un nuevo icono muy seguido.
+        // '150' significa que cada 150 milisegundos nace un nuevo icono.
+        // Si quieres AÚN MÁS, baja este número (ej: 100). Si quieres menos, súbelo (ej: 300).
+        setInterval(crearIcono, 150); 
+
+
+        // LÓGICA DE MÚSICA Y VIDEO INTELIGENTE
+const musica = document.getElementById('musicaFondo');
+const video = document.getElementById('miVideo'); // Asegúrate que tu etiqueta <video> tenga id="miVideo"
+const btnMusica = document.getElementById('btnMusica');
+
+// Función para reproducir/pausar manualmente
+function toggleMusica() {
+    if (musica.paused) {
+        musica.play();
+        btnMusica.innerText = "Pause";
+    } else {
+        musica.pause();
+        btnMusica.innerText = "Play";
+    }
+}
+
+// Si el video empieza a reproducirse, se pausa la música de fondo
+video.onplay = function() {
+    musica.pause();
+    btnMusica.innerText = "Play";
+};
+
+// Si el video se pausa o termina, la música de fondo vuelve a sonar
+video.onpause = function() {
+    if (video.paused) { // Solo si el usuario pausó el video
+        musica.play();
+        btnMusica.innerText = "Pause";
+    }
+};
+
+    </script>
+
+
+</body>
+</html>
